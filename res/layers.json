@@ -1,0 +1,61 @@
+[
+  {
+    "type": "IntroLayer",
+    "displayName": "Intro",
+    "startFrame": 0,
+    "endFrame": 9032,
+    "color": "#1b592f",
+    "config": {
+      "offset": 2
+    }
+  },
+  {
+    "type": "GhettoBlasterLayer",
+    "displayName": "Ghettoblaster",
+    "startFrame": 655,
+    "endFrame": 1177,
+    "color": "#a393a0",
+    "config": {}
+  },
+  {
+    "type": "TextOverlayLayer",
+    "displayName": "ghetto text",
+    "startFrame": 500,
+    "endFrame": 1177,
+    "color": "#5bbb1f",
+    "config": {
+      "title": "Ghetto blaster",
+      "textColor": "white",
+      "strokeColor": "black",
+      "body": [
+        "- dual cassette deck",
+        "- stereo",
+        "- back in fashion"
+      ],
+      "offset": {
+        "x": 1.5,
+        "y": 2
+      }
+    }
+  },
+  {
+    "type": "BloomLayer",
+    "displayName": "Bloom fx",
+    "startFrame": 5892,
+    "endFrame": 6901,
+    "color": "#5bbb1f",
+    "config": {
+      "amount": 4.5
+    }
+  },
+  {
+    "type": "BloomLayer",
+    "displayName": "Bloom fx",
+    "startFrame": 6937,
+    "endFrame": 8183,
+    "color": "#5bbb1f",
+    "config": {
+      "amount": 1.1
+    }
+  }
+]

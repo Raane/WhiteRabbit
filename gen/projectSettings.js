@@ -1,0 +1,1 @@
+var PROJECT = {"music":{"path":"res/music.mp3","bpm":110,"subdivision":6}};

@@ -1,0 +1,180 @@
+{
+  "GridLayer": {
+    "fov": [
+      {
+        "startFrame": 600,
+        "endFrame": 710,
+        "points": [45, 75],
+        "easing": "easeIn"
+      }
+    ]
+  },
+  "MaxLayer": {
+    "position": [
+    ]
+  },
+  "AtomiumLayer": {
+    "position": [
+      {
+        "startFrame": 0,
+        "endFrame": 250,
+        "points": [
+          [-70, 200, -70],
+          [-400, 700, -850],
+          [-1150, 800, -1000]
+        ],
+        "easing": "easeOut"
+      },
+      {
+        "startFrame": 251,
+        "endFrame": 283,
+        "point": [
+          [-559.79,465.5,-55.07],
+          [-672.3,498.33,-98.94]
+        ]
+      },
+      {
+        "startFrame": 284,
+        "endFrame": 349,
+        "point": [
+          [-931.24,48.25,-146.36],
+          [-1067.99,36.69,-299.12]
+        ]
+      },
+      {
+        "startFrame": 350,
+        "endFrame": 414,
+        "points": [
+          [-1095.28,900.1,939.99],
+          [-1022,951.88,1044.79]
+        ]
+      },
+      {
+        "startFrame": 415,
+        "endFrame": 479,
+        "point": [-1246.01,1000,-1164.01]
+      },
+      {
+        "startFrame": 480,
+        "endFrame": 545,
+        "points": [
+          [630.24,519.29,546.18],
+          [606.84,512.08,10.15]
+        ]
+      },
+      {
+        "startFrame": 546,
+        "endFrame": 801,
+        "points": [
+          [2591,-660,-238],
+          [103.02,47.98,-139.65]
+        ],
+        "easing": "easeOut"
+      }
+    ],
+    "lookAt": [
+      {
+        "startFrame": 0,
+        "endFrame": 250,
+        "points": [
+          [0, 0, 0],
+          [4.07,85.09,65.53]
+        ]
+      },
+      {
+        "startFrame": 251,
+        "endFrame": 283,
+        "point": [-441.94,432.41,-7.15]
+      },
+      {
+        "startFrame": 284,
+        "endFrame": 349,
+        "point": [
+          [4519.09,-895,-5000],
+          [4258.72,-858,-5000]
+        ]
+      },
+      {
+        "startFrame": 350,
+        "endFrame": 414,
+        "point": [-884.12,855.54,814.34]
+      },
+      {
+        "startFrame": 415,
+        "endFrame": 479,
+        "points": [
+          [434.19, -15, 378],
+          [434.19, -85, 400]
+        ]
+      },
+      {
+        "startFrame": 480,
+        "endFrame": 545,
+        "point": [351.58,455.25,-5000]
+      },
+      {
+        "startFrame": 546,
+        "endFrame": 801,
+        "point": [
+          [-5000,2960.87,-301.92],
+          [2854.07,-5000,2592.25]
+        ],
+        "easing": "easeOut"
+      }
+    ],
+    "roll": [
+      {
+        "startFrame": 0,
+        "endFrame": 250,
+        "value": -1.35
+      },
+      {
+        "startFrame": 251,
+        "endFrame": 283,
+        "value": -1.52
+      },
+      {
+        "startFrame": 284,
+        "endFrame": 349,
+        "value": 0.28
+      },
+      {
+        "startFrame": 350,
+        "endFrame": 414,
+        "value": 0.1
+      },
+      {
+        "startFrame": 415,
+        "endFrame": 479,
+        "value": [1.6, 1.35]
+      },
+      {
+        "startFrame": 480,
+        "endFrame": 545,
+        "value": [1, 2.42]
+      },
+      {
+        "startFrame": 546,
+        "endFrame": 801,
+        "value": [1.93, 0.95]
+      }
+    ],
+    "fov": [
+      {
+        "startFrame": 0,
+        "endFrame": 250,
+        "value": 45
+      },
+      {
+        "startFrame": 480,
+        "endFrame": 545,
+        "value": 60
+      },
+      {
+        "startFrame": 546,
+        "endFrame": 546,
+        "value": 45
+      }
+    ]
+  }
+}
