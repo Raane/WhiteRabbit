@@ -9,7 +9,7 @@ varying vec2 vUv;
 #define PI 3.1415926535897932384626433832795
 
 float draw_circle(vec2 position, vec2 scale) {
-    vec2 uv = vUv;
+    vec2 uv = mod(vUv * 8., 1.);
     uv.y = mod(uv.y * 2., 1.);
 	float distance = sqrt(pow((uv.x - position.x) * scale.x , 2.) + pow((uv.y - position.y) * scale.y, 2.));
 	return 1. - min(distance, 1.0);
@@ -49,9 +49,9 @@ void main() {
 	intensity += draw_circle(vec2(mod(motion*0.1+9.9, 2.5)-1., 0.08), vec2(2.4, 52.0));
 	intensity += draw_circle(vec2(mod(motion*0.1+0.0, 2.6)-1., 0.97), vec2(2.3, 58.0));
     
-    float invertAmount = 0.3 * sin(vUv.y * 5. + time * 0.05 - vUv.x * 3.14) + 0.7;
+    float invertAmount = 0.;//0.3 * sin(mod(vUv.y, 8.) * 5. + time * 0.05 - mod(vUv.x, 8.) * 3.14) + 0.7;
     intensity = mix(intensity, 1. - intensity, invertAmount);
-    intensity *= (0.25 - 0.75 * cos(vUv.y * PI * 2.));
+    intensity *= (0.25 - 0.75 * cos(mod(vUv.y, 8.) * PI * 2.));
     vec3 color = mix(colorA, colorB, intensity);
     gl_FragColor = vec4(color, 1.);
 }
