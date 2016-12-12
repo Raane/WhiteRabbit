@@ -43436,7 +43436,7 @@ LayerManager.prototype.loadLayer = function(layer) {
       if (!that.checkDependencies(layer)) {
         return setTimeout(arguments.callee, 100);
       }
-      layer.instance = new window[layer.type](layer);
+      layer.instance = new window[layer.type](layer, that.demo);
       Loader.start(function() {}, function() {});
       that.rebuildEffectComposer();
     } else {
@@ -43483,7 +43483,7 @@ LayerManager.prototype.refresh = function(className) {
     var layer = this.layers[i];
     if(layer.type == className || (layer.dependencies && layer.dependencies.indexOf(className) != -1)) {
       if (layer.type in window && this.checkDependencies(layer)) {
-        layer.instance = new window[layer.type](layer);
+        layer.instance = new window[layer.type](layer, this.demo);
       }
     }
   }
@@ -44203,12 +44203,12 @@ function createLoop(options) {
   var renderer = options.renderer;
   var music = options.music;
 
-
   function Looper() {
     this.time = 0;
     this.oldTime = 0;
     this.deltaTime = 0;
     this.currentFrame = 0;
+    this.frameLength = frameLength;
 
     var that = this;
     this.loop = function() {
