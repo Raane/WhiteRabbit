@@ -18,34 +18,52 @@ function IntroLayer(layer) {
 
   this.create_geoms();
 
-  this.top_material = new THREE.MeshBasicMaterial( { color: 0xFFFFFF } ) ;
-  this.large_square = new THREE.Mesh( this.large_square_geom  , this.top_material );
-  this.small_square = new THREE.Mesh( this.small_square_geom  , this.top_material );
-  this.scene.add( this.large_square );
-  this.scene.add( this.small_square );
+  //this.top_material = new THREE.MeshBasicMaterial( { color: 0xFFFFFF } ) ;
+  this.top_material = new THREE.ShaderMaterial(SHADERS.animelines);
+  
 
   this.inner_side_material = new THREE.MeshBasicMaterial( {color: 0x888888});
   
-  this.small_inner_side1 = new THREE.Mesh( this.small_inner_side_geom, this.inner_side_material );
-  this.small_inner_side1.position.set(0, -1, -1);
-  this.scene.add( this.small_inner_side1 );
+  this.create_top(this.large_square_geom, this.top_material);
+  //this.create_top(this.small_square_geom, new THREE.ShaderMaterial(SHADERS.animelines));
 
-  this.small_inner_side2 = new THREE.Mesh( this.small_inner_side_geom, this.inner_side_material );
-  this.small_inner_side2.position.set(1, -1, 0);
-  this.small_inner_side2.rotation.y = Math.PI * -0.5;
-  this.scene.add( this.small_inner_side2 );
+  this.create_walls(1, this.inner_side_material, false);
+  this.create_walls(2, this.inner_side_material, true);
 
-  this.small_inner_side3 = new THREE.Mesh( this.small_inner_side_geom, this.inner_side_material );
-  this.small_inner_side3.position.set(0, -1, 1);
-  this.small_inner_side3.rotation.y = Math.PI * 1;
-  this.scene.add( this.small_inner_side3 );
-
-  this.small_inner_side4 = new THREE.Mesh( this.small_inner_side_geom, this.inner_side_material );
-  this.small_inner_side4.position.set(-1, -1, 0);
-  this.small_inner_side4.rotation.y = Math.PI * 0.5;
-  this.scene.add( this.small_inner_side4 );
+  this.create_walls(3, this.inner_side_material, false);
+  this.create_walls(4, this.inner_side_material, true);
 
   this.renderPass = new THREE.RenderPass(this.scene, this.camera);
+}
+
+IntroLayer.prototype.create_top = function(geometry, material) {
+  var mesh = new THREE.Mesh( geometry, material );
+  this.scene.add( mesh );
+}
+
+IntroLayer.prototype.create_walls = function(offset, material, outer_wall) {
+
+  var small_inner_side_geom = new THREE.PlaneGeometry(2 * offset, 2 * offset);
+
+  var side1 = new THREE.Mesh( small_inner_side_geom, material );
+  side1.position.set(0, -offset, -offset);
+  side1.rotation.y = Math.PI * outer_wall;
+  this.scene.add( side1 );
+
+  var side2 = new THREE.Mesh( small_inner_side_geom, material );
+  side2.position.set(offset, -offset, 0);
+  side2.rotation.y = Math.PI * -0.5 + Math.PI * outer_wall;
+  this.scene.add( side2 );
+
+  var side3 = new THREE.Mesh( small_inner_side_geom, material );
+  side3.position.set(0, -offset, offset);
+  side3.rotation.y = Math.PI * 1 + Math.PI * outer_wall;
+  this.scene.add( side3 );
+
+  var side4 = new THREE.Mesh( small_inner_side_geom, material );
+  side4.position.set(-offset, -offset, 0);
+  side4.rotation.y = Math.PI * 0.5 + Math.PI * outer_wall;
+  this.scene.add( side4 );
 }
 
 IntroLayer.prototype.create_geoms = function() {
@@ -108,7 +126,7 @@ IntroLayer.prototype.create_geoms = function() {
   this.small_square_geom.faces.push( new THREE.Face3( 3, 6, 7 ) );
 
   // Planes
-  this.small_inner_side_geom = new THREE.PlaneGeometry(2, 2);
+  side_geom = new THREE.PlaneGeometry(2, 2);
   this.small_outer_side_geom = new THREE.PlaneGeometry(4, 4);
   this.large_inner_side_geom = new THREE.PlaneGeometry(6, 6);
   this.large_outer_side_geom = new THREE.PlaneGeometry(8, 8);
@@ -126,7 +144,11 @@ IntroLayer.prototype.end = function() {
 };
 
 IntroLayer.prototype.update = function(frame) {
-  this.large_square.rotation.y = frame/100 + Math.PI/4;
+  this.top_material.uniforms.time.value = frame* 20;
+
+  this.top_material.uniforms.colorA.value = new THREE.Color(19 / 255, 18 / 255, 94 / 255);
+  this.top_material.uniforms.colorB.value = new THREE.Color(208 / 255, 225 / 255, 255 / 255);
+  //this.large_square.rotation.y = frame/100 + Math.PI/4;
   //this.small_square.rotation.y = frame/100;
-  //this.small_inner_side1.rotation.y = frame/100;
+  //side1.rotation.y = frame/100;
 };
