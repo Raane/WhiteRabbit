@@ -7,10 +7,10 @@ function IntroLayer(layer) {
   this.scene = new THREE.Scene();
   this.camera = new THREE.PerspectiveCamera(45, 16 / 9, 1, 100);
   
-  this.camera.position.z = 3;
-  this.camera.position.y = 14;
+  this.camera.position.z = 0;
+  this.camera.position.y = 34;
 
-  this.camera.lookAt(new THREE.Vector3(0,0,1));
+  this.camera.lookAt(new THREE.Vector3(0,0,0));
 
   var light = new THREE.PointLight( 0xffffff, 1, 100 );
   light.position.set( 2, 2, 2 );
@@ -18,54 +18,126 @@ function IntroLayer(layer) {
 
   this.create_geoms();
 
-  //this.top_material = new THREE.MeshBasicMaterial( { color: 0xFFFFFF } ) ;
   this.top_material = new THREE.ShaderMaterial(SHADERS.animelines);
-  
 
   this.inner_side_material = new THREE.MeshBasicMaterial( {color: 0x888888});
   
-  this.create_top(this.large_square_geom, this.top_material);
-  this.create_top(this.small_square_geom, this.top_material);
-
-  this.create_walls(1, this.top_material, false);
-  this.create_walls(2, this.top_material, true);
-
-  this.create_walls(3, this.top_material, false);
-  this.create_walls(4, this.top_material, true);
+  this.create_layer(0);
+  this.create_layer(-20);
+  this.create_layer(-40);
+  this.create_layer(-60);
+  this.create_layer(-80);
+  this.create_layer(-100);
+  this.create_layer(-120);
  
   this.renderPass = new THREE.RenderPass(this.scene, this.camera);
 }
 
-IntroLayer.prototype.create_top = function(geometry, material) {
-  var mesh = new THREE.Mesh( geometry, material );
-  this.scene.add( mesh );
+// Create a full layer of squares
+IntroLayer.prototype.create_layer = function(y) {
+ var distance = 9
+ var elevation = 1;
+
+  this.create_small(0,y+elevation,0,0);
+  this.create_large(0,y,0,Math.PI/4);
+
+
+  this.create_small(distance,y+elevation,0,0);
+  this.create_large(distance,y,0,Math.PI/4);
+
+  this.create_small(-distance,y+elevation,0,0);
+  this.create_large(-distance,y,0,Math.PI/4);
+
+  this.create_small(0,y+elevation,distance,0);
+  this.create_large(0,y,distance,Math.PI/4);
+
+  this.create_small(0,y+elevation,-distance,0);
+  this.create_large(0,y,-distance,Math.PI/4);
+
+
+  this.create_small(distance,y+elevation,distance,0);
+  this.create_large(distance,y,distance,Math.PI/4);
+
+  this.create_small(-distance,y+elevation,-distance,0);
+  this.create_large(-distance,y,-distance,Math.PI/4);
+  
+  this.create_small(distance,y+elevation,-distance,0);
+  this.create_large(distance,y,-distance,Math.PI/4);
+  
+  this.create_small(-distance,y+elevation,distance,0);
+  this.create_large(-distance,y,distance,Math.PI/4);
 }
 
-IntroLayer.prototype.create_walls = function(offset, material, outer_wall) {
+// Create a small cube at the desired location.
+IntroLayer.prototype.create_small = function(x, y, z, ry) {
+  var mesh = new THREE.Mesh();
+
+  this.create_top(mesh, this.small_square_geom, this.top_material);
+
+  this.create_walls(mesh, 1, this.top_material, false);
+  this.create_walls(mesh, 2, this.top_material, true);
+
+  mesh.position.x = x;
+  mesh.position.y = y;
+  mesh.position.z = z;
+  mesh.rotation.y = ry;
+
+  var small_scale = 1.2;
+  mesh.scale.set(small_scale, small_scale, small_scale);
+
+  this.scene.add(mesh);
+}
+
+// Create a large cube at the desired location.
+IntroLayer.prototype.create_large = function(x, y, z, ry) {
+  var mesh = new THREE.Mesh();
+
+  this.create_top(mesh, this.large_square_geom, this.top_material);
+
+  this.create_walls(mesh, 3, this.top_material, false);
+  this.create_walls(mesh, 4, this.top_material, true);
+
+  mesh.position.x = x;
+  mesh.position.y = y;
+  mesh.position.z = z;
+  mesh.rotation.y = ry;
+
+  this.scene.add(mesh);
+}
+
+// Create a top
+IntroLayer.prototype.create_top = function(parrent, geometry, material) {
+  var mesh = new THREE.Mesh( geometry, material );
+  parrent.add( mesh );
+}
+
+// Create walls with an offset from the center forming a square tube facing inward or outward.
+IntroLayer.prototype.create_walls = function(parrent, offset, material, outer_wall) {
 
   var small_inner_side_geom = new THREE.PlaneGeometry(2 * offset, 2 * offset);
 
   var side1 = new THREE.Mesh( small_inner_side_geom, material );
   side1.position.set(0, -offset, -offset);
   side1.rotation.y = Math.PI * outer_wall;
-  this.scene.add( side1 );
+  parrent.add( side1 );
 
   var side2 = new THREE.Mesh( small_inner_side_geom, material );
   side2.position.set(offset, -offset, 0);
   side2.rotation.y = Math.PI * -0.5 + Math.PI * outer_wall;
-  this.scene.add( side2 );
+  parrent.add( side2 );
 
   var side3 = new THREE.Mesh( small_inner_side_geom, material );
   side3.position.set(0, -offset, offset);
   side3.rotation.y = Math.PI * 1 + Math.PI * outer_wall;
-  this.scene.add( side3 );
+  parrent.add( side3 );
 
   var side4 = new THREE.Mesh( small_inner_side_geom, material );
   side4.position.set(-offset, -offset, 0);
   side4.rotation.y = Math.PI * 0.5 + Math.PI * outer_wall;
-  this.scene.add( side4 );
+  parrent.add( side4 );
 }
 
+// Create the custom geometry for the top surfaces (square with hole)
 IntroLayer.prototype.create_geoms = function() {
   // Large square with hole
   this.large_square_geom = new THREE.Geometry(); 
@@ -180,7 +252,9 @@ IntroLayer.prototype.end = function() {
 };
 
 IntroLayer.prototype.update = function(frame) {
-  this.top_material.uniforms.time.value = frame;
+  this.top_material.uniforms.time.value = frame ;
+
+  this.camera.position.y = 34 - frame/20 ;
 
   this.top_material.uniforms.colorA.value = new THREE.Color(19 / 255, 18 / 255, 94 / 255);
   this.top_material.uniforms.colorB.value = new THREE.Color(208 / 255, 225 / 255, 255 / 255);
