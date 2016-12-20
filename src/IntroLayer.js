@@ -18,9 +18,8 @@ function IntroLayer(layer) {
 
   this.create_geoms();
 
-  this.top_material = new THREE.ShaderMaterial(SHADERS.animelines);
-
-  this.inner_side_material = new THREE.MeshBasicMaterial( {color: 0x888888});
+  this.top_material = new THREE.ShaderMaterial(SHADERS.topshader);
+  this.wall_material = new THREE.ShaderMaterial(SHADERS.wallshader);
   
   this.create_layer(0);
   this.create_layer(-20);
@@ -35,37 +34,40 @@ function IntroLayer(layer) {
 
 // Create a full layer of squares
 IntroLayer.prototype.create_layer = function(y) {
- var distance = 9
+ var distance = 8.485;
  var elevation = 1;
+ var elevation2 = 1;
+ var elevation3 = 2;
 
+  // Center cube
   this.create_small(0,y+elevation,0,0);
   this.create_large(0,y,0,Math.PI/4);
 
-
+  // Over, under, right left cube
   this.create_small(distance,y+elevation,0,0);
-  this.create_large(distance,y,0,Math.PI/4);
+  this.create_large(distance,y+elevation2,0,Math.PI/4);
 
   this.create_small(-distance,y+elevation,0,0);
-  this.create_large(-distance,y,0,Math.PI/4);
+  this.create_large(-distance,y+elevation2,0,Math.PI/4);
 
   this.create_small(0,y+elevation,distance,0);
-  this.create_large(0,y,distance,Math.PI/4);
+  this.create_large(0,y+elevation2,distance,Math.PI/4);
 
   this.create_small(0,y+elevation,-distance,0);
-  this.create_large(0,y,-distance,Math.PI/4);
+  this.create_large(0,y+elevation2,-distance,Math.PI/4);
 
-
+  // Corner cubes
   this.create_small(distance,y+elevation,distance,0);
-  this.create_large(distance,y,distance,Math.PI/4);
+  this.create_large(distance,y+elevation3,distance,Math.PI/4);
 
   this.create_small(-distance,y+elevation,-distance,0);
-  this.create_large(-distance,y,-distance,Math.PI/4);
+  this.create_large(-distance,y+elevation3,-distance,Math.PI/4);
   
   this.create_small(distance,y+elevation,-distance,0);
-  this.create_large(distance,y,-distance,Math.PI/4);
+  this.create_large(distance,y+elevation3,-distance,Math.PI/4);
   
   this.create_small(-distance,y+elevation,distance,0);
-  this.create_large(-distance,y,distance,Math.PI/4);
+  this.create_large(-distance,y+elevation3,distance,Math.PI/4);
 }
 
 // Create a small cube at the desired location.
@@ -74,8 +76,8 @@ IntroLayer.prototype.create_small = function(x, y, z, ry) {
 
   this.create_top(mesh, this.small_square_geom, this.top_material);
 
-  this.create_walls(mesh, 1, this.top_material, false);
-  this.create_walls(mesh, 2, this.top_material, true);
+  this.create_walls(mesh, 1, this.wall_material, false);
+  this.create_walls(mesh, 2, this.wall_material, true);
 
   mesh.position.x = x;
   mesh.position.y = y;
@@ -94,8 +96,8 @@ IntroLayer.prototype.create_large = function(x, y, z, ry) {
 
   this.create_top(mesh, this.large_square_geom, this.top_material);
 
-  this.create_walls(mesh, 3, this.top_material, false);
-  this.create_walls(mesh, 4, this.top_material, true);
+  this.create_walls(mesh, 3, this.wall_material, false);
+  this.create_walls(mesh, 4, this.wall_material, true);
 
   mesh.position.x = x;
   mesh.position.y = y;
@@ -252,13 +254,14 @@ IntroLayer.prototype.end = function() {
 };
 
 IntroLayer.prototype.update = function(frame) {
-  this.top_material.uniforms.time.value = frame ;
+  this.top_material.uniforms.time.value = frame * 0;
 
   this.camera.position.y = 34 - frame/20 ;
 
-  this.top_material.uniforms.colorA.value = new THREE.Color(19 / 255, 18 / 255, 94 / 255);
-  this.top_material.uniforms.colorB.value = new THREE.Color(208 / 255, 225 / 255, 255 / 255);
-  //this.large_square.rotation.y = frame/100 + Math.PI/4;
-  //this.small_square.rotation.y = frame/100;
-  //side1.rotation.y = frame/100;
+
+  this.wall_material.uniforms.colorA.value = new THREE.Color(19 / 255, 18 / 255, 94 / 255);
+  this.wall_material.uniforms.colorB.value = new THREE.Color(208 / 255, 225 / 255, 255 / 255);
+
+  this.top_material.uniforms.tiles.value = 4;
+  this.top_material.uniforms.time.value = frame;
 };

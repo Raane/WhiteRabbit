@@ -10,6 +10,19 @@ SHADERS.img = {uniforms: {
     "img": { "type": 't', "value": null }
 }
 ,vertexShader: "varying vec2 vUv;\n\nvoid main() {\n    vUv = uv;\n    gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);\n}\n",fragmentShader: "varying mediump vec2 vUv;\nuniform sampler2D img;\n\nvoid main() {\n    gl_FragColor = texture2D(img, vUv);\n}\n"};
+SHADERS.topshader = {uniforms: {
+    "tDiffuse": { "type": "t", "value": null },
+    "tiles": { "value": null },
+    "time": { "type": "f", "value": null }
+}
+,vertexShader: "uniform sampler2D tDiffuse;\n\nvarying vec2 vUv;\n\nvoid main() {\n    vUv = uv;\n    gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);\n}\n",fragmentShader: "uniform float time;\nuniform float tiles;\nuniform sampler2D tDiffuse;\n\nvarying vec2 vUv;\n\n#define PI 3.1415926535897932384626433832795\n\nvoid main() {\n\tvec2 uv = mod(vUv * tiles, 1.);\n\tfloat motion = time;\n    float intensity;\n\n    float start = time / 100.;\n    float stop = time / 100. + .25;\n\n    float color2 = max( abs( uv.x - 0.5 ), abs( uv.y - 0.5 ));\n    float color = floor( color2 * 2. + start );\n    color += 1. - floor( color2 * 2. + stop );\n\n    gl_FragColor = vec4(color, color, color, 1.);\n}\n"};
+SHADERS.wallshader = {uniforms: {
+    "tDiffuse": { "type": "t", "value": null },
+    "colorA": { "value": null },
+    "colorB": { "value": null },
+    "time": { "type": "f", "value": null }
+}
+,vertexShader: "uniform sampler2D tDiffuse;\n\nvarying vec2 vUv;\n\nvoid main() {\n    vUv = uv;\n    gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);\n}\n",fragmentShader: "uniform float time;\nuniform float variant;\nuniform vec3 colorA;\nuniform vec3 colorB;\nuniform sampler2D tDiffuse;\n\nvarying vec2 vUv;\n\n#define PI 3.1415926535897932384626433832795\n\nvoid main() {\n\tvec2 uv = mod(vUv * 8., 1.);\n\tfloat motion = time;\n    float intensity;\n\n    vec3 color = vec3(uv.y, uv.y, uv.y);\n    gl_FragColor = vec4(color, 1.);\n}\n"};
 SHADERS.default = {uniforms: {
     tDiffuse: { type: 't', value: null },
 }
