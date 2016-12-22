@@ -13,7 +13,7 @@
     "type": "IntroLayer",
     "displayName": "Intro",
     "startFrame": 300,
-    "endFrame": 9032,
+    "endFrame": 10015,
     "color": "#1b592f",
     "config": {
       "offset": 2

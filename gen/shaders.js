@@ -22,7 +22,7 @@ SHADERS.wallshader = {uniforms: {
     "colorB": { "value": null },
     "time": { "type": "f", "value": null }
 }
-,vertexShader: "uniform sampler2D tDiffuse;\n\nvarying vec2 vUv;\n\nvoid main() {\n    vUv = uv;\n    gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);\n}\n",fragmentShader: "uniform float time;\nuniform float variant;\nuniform vec3 colorA;\nuniform vec3 colorB;\nuniform sampler2D tDiffuse;\n\nvarying vec2 vUv;\n\n#define PI 3.1415926535897932384626433832795\n\nvoid main() {\n\tvec2 uv = mod(vUv * 8., 1.);\n\tfloat motion = time;\n    float intensity;\n\n    vec3 color = vec3(uv.y, uv.y, uv.y);\n    gl_FragColor = vec4(color, 1.);\n}\n"};
+,vertexShader: "uniform sampler2D tDiffuse;\n\nvarying vec2 vUv;\n\nvoid main() {\n    vUv = uv;\n    gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);\n}\n",fragmentShader: "uniform float time;\nuniform float variant;\nuniform vec3 colorA;\nuniform vec3 colorB;\nuniform sampler2D tDiffuse;\n\nvarying vec2 vUv;\n\n#define PI 3.1415926535897932384626433832795\n\nvoid main() {\n\tvec2 uv = mod(vUv * 8., 1.);\n\tfloat motion = time;\n    float intensity;\n\n    vec3 color = vec3(uv.y, uv.y, uv.y);\n\n    color *= vec3(sin(time/100.), sin(time/100. + 2. * PI/3.), sin(time/100. + 4. * PI/3.));\n\n    gl_FragColor = vec4(color, 1.);\n}\n"};
 SHADERS.default = {uniforms: {
     tDiffuse: { type: 't', value: null },
 }

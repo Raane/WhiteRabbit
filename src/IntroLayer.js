@@ -28,16 +28,23 @@ function IntroLayer(layer) {
   this.create_layer(-80);
   this.create_layer(-100);
   this.create_layer(-120);
+  this.create_layer(-140);
+  this.create_layer(-160);
+  this.create_layer(-180);
+  this.create_layer(-200);
+  this.create_layer(-220);
+  this.create_layer(-240);
+  this.create_layer(-260);
  
   this.renderPass = new THREE.RenderPass(this.scene, this.camera);
 }
 
 // Create a full layer of squares
 IntroLayer.prototype.create_layer = function(y) {
- var distance = 8.485;
+ var distance = 8.485; // sqrt(6^2 + 6^2)
  var elevation = 1;
- var elevation2 = 1;
- var elevation3 = 2;
+ var elevation2 = 0.5;
+ var elevation3 = 1;
 
   // Center cube
   this.create_small(0,y+elevation,0,0);
@@ -258,9 +265,9 @@ IntroLayer.prototype.update = function(frame) {
 
   this.camera.position.y = 34 - frame/20 ;
 
-
   this.wall_material.uniforms.colorA.value = new THREE.Color(19 / 255, 18 / 255, 94 / 255);
   this.wall_material.uniforms.colorB.value = new THREE.Color(208 / 255, 225 / 255, 255 / 255);
+  this.wall_material.uniforms.time.value = frame;
 
   this.top_material.uniforms.tiles.value = 4;
   this.top_material.uniforms.time.value = frame;
