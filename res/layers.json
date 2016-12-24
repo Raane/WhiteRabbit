@@ -10,9 +10,19 @@
     }
   },
   {
-    "type": "IntroLayer",
-    "displayName": "Intro",
+    "type": "HypnoCubeLayer",
+    "displayName": "HypnoCube",
     "startFrame": 300,
+    "endFrame": 1200,
+    "color": "#1b592f",
+    "config": {
+      "offset": 2
+    }
+  },
+  {
+    "type": "TextureBallLayer",
+    "displayName": "TextureBall",
+    "startFrame": 1200,
     "endFrame": 10015,
     "color": "#1b592f",
     "config": {
