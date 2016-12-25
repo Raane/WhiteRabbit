@@ -12,6 +12,20 @@ SHADERS.ballshader = {uniforms: {
     "time": { "type": "f", "value": null }
 }
 ,vertexShader: "uniform sampler2D tDiffuse;\n\nvarying vec2 vUv;\n\nvoid main() {\n    vUv = uv;\n    gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);\n}\n",fragmentShader: "uniform float time;\nuniform float variant;\nuniform vec3 colorA;\nuniform vec3 colorB;\nuniform sampler2D tDiffuse;\n\nvarying vec2 vUv;\n\n#define PI 3.1415926535897932384626433832795\n\nvoid main() {\n\tvec2 uv = mod(vUv * 8., 1.);\n\tfloat motion = time;\n    float intensity;\n\n    //vec3 color = vec3(uv.x/1. + uv.y + time/100., uv.y + time/100., uv.y + time/100.);\n    //vec3 color = vec3(uv.x/1. + uv.y + time/100., uv.y + time/100., - uv.x/1. + uv.y + time/100.);\n    vec3 color = vec3(uv.x + uv.y + time/100., uv.x + uv.y + time/100., uv.x + uv.y + time/100.);\n\n    color = mod(color, 1.);\n    color = floor(color + 0.5);\n\n    gl_FragColor = vec4(color, 1.);\n}\n"};
+SHADERS.ballshader2 = {uniforms: {
+    "tDiffuse": { "type": "t", "value": null },
+    "colorA": { "value": null },
+    "colorB": { "value": null },
+    "time": { "type": "f", "value": null }
+}
+,vertexShader: "uniform sampler2D tDiffuse;\n\nvarying vec2 vUv;\n\nvoid main() {\n    vUv = uv;\n    gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);\n}\n",fragmentShader: "uniform float time;\nuniform float variant;\nuniform vec3 colorA;\nuniform vec3 colorB;\nuniform sampler2D tDiffuse;\n\nvarying vec2 vUv;\n\n#define PI 3.1415926535897932384626433832795\n\nvoid main() {\n\tvec2 uv = mod(vUv * 8., 1.);\n\tfloat motion = time;\n    float intensity;\n\n    //vec3 color = vec3(uv.x/1. + uv.y + time/100., uv.y + time/100., uv.y + time/100.);\n    vec3 color = vec3(uv.x + uv.y + time/100., uv.y + time/100., - uv.x + uv.y + time/100.);\n    //vec3 color = vec3(uv.x + uv.y + time/100., uv.x + uv.y + time/100., uv.x + uv.y + time/100.);\n\n    color = mod(color, 1.);\n    color = floor(color + 0.5);\n\n    gl_FragColor = vec4(color, 1.);\n}\n"};
+SHADERS.ballshader3 = {uniforms: {
+    "tDiffuse": { "type": "t", "value": null },
+    "colorA": { "value": null },
+    "colorB": { "value": null },
+    "time": { "type": "f", "value": null }
+}
+,vertexShader: "uniform sampler2D tDiffuse;\n\nvarying vec2 vUv;\n\nvoid main() {\n    vUv = uv;\n    gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);\n}\n",fragmentShader: "uniform float time;\nuniform float variant;\nuniform vec3 colorA;\nuniform vec3 colorB;\nuniform sampler2D tDiffuse;\n\nvarying vec2 vUv;\n\n#define PI 3.1415926535897932384626433832795\n\nvoid main() {\n\tvec2 uv = mod(vUv * 8., 1.);\n\tfloat motion = time;\n    float intensity;\n\n    vec3 color = vec3(uv.y + time/100., uv.y + time/100., uv.y + time/100.);\n\n    color = mod(color, 1.);\n    color = floor(color + 0.5);\n\n    gl_FragColor = vec4(color, 1.);\n}\n"};
 SHADERS.img = {uniforms: {
     "tDiffuse": { "type": 't', "value": null },
     "img": { "type": 't', "value": null }
