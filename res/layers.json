@@ -23,6 +23,17 @@
     "type": "TextureBallLayer",
     "displayName": "TextureBall",
     "startFrame": 1200,
+    "endFrame": 1500,
+    "color": "#1b592f",
+    "config": {
+      "offset": 2
+    }
+  },
+
+  {
+    "type": "CubeRenderLayer",
+    "displayName": "CubeRender",
+    "startFrame": 1500,
     "endFrame": 10015,
     "color": "#1b592f",
     "config": {
