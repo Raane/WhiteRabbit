@@ -9,6 +9,25 @@ function CubeRenderLayer(layer) {
   this.scene = new THREE.Scene();
   this.camera = new THREE.PerspectiveCamera(45, 16 / 9, 1, 100);
 
+  var ambient_light = new THREE.AmbientLight( 0x404040 );
+  this.scene.add( ambient_light );
+
+  this.point_light = new THREE.PointLight( 0xffffff, 1, 1000 );
+  this.scene.add( this.point_light );
+
+
+  var point_light1 = new THREE.PointLight( 0xffffff, 3, 20 );
+  point_light1.position.set(0,0,-5);
+  this.scene.add( point_light1 );
+
+  var point_light2 = new THREE.PointLight( 0xffffff, 3, 20 );
+  point_light2.position.set(0,0,-15);
+  this.scene.add( point_light2 );
+
+  var point_light3 = new THREE.PointLight( 0xffffff, 3, 20 );
+  point_light3.position.set(0,0,-25);
+  this.scene.add( point_light3 );
+
   this.top_material = new THREE.ShaderMaterial(SHADERS.topshader);
   this.wall_material = new THREE.ShaderMaterial(SHADERS.wallshader);
   this.ball_material = new THREE.ShaderMaterial(SHADERS.ballshader);
@@ -29,13 +48,20 @@ function CubeRenderLayer(layer) {
 
 CubeRenderLayer.prototype.generate_cubes = function() {
   var geometry = new THREE.BoxGeometry(3,3,3);
-  var ball_material = new THREE.ShaderMaterial(SHADERS.topshader);
+  //var ball_material = new THREE.ShaderMaterial(SHADERS.topshader);
+  var ball_material = new THREE.MeshPhongMaterial( { 
+    color: 0xffffff, 
+    specular: 0x050505,
+    shininess: 100,
+    map: Loader.loadTexture('res/' + 'triangle.png'),
+    opacity: 1.0, transparent: false
+  } );
   this.cubes = [];
 
   this.cube_count = 1000;
 
   for(var i = 0; i < this.cube_count; i++) {
-    var position = i/(3*64) - 10;
+    var position = i/(3*64);
     var np = this.cubePositionFunction2(position);
     this.cubes.push(new THREE.Mesh(geometry, ball_material));
     this.cubes[i].position.set(np.x, np.y, np.z);
@@ -44,7 +70,7 @@ CubeRenderLayer.prototype.generate_cubes = function() {
 
     // Draw derived helper lines
     var dnp = this.cubePositionDerived(position);
-    this.cubes[i].rotation.set(dnp.x, dnp.y, dnp.z);  
+    this.cubes[i].rotation.set(dnp.x, dnp.y, dnp.z);
 /*
     var linematerial = new THREE.LineBasicMaterial({
       color: 0x00ddff
@@ -86,17 +112,15 @@ CubeRenderLayer.prototype.generate_cubes = function() {
 
 // Returns a point (x,y,z) at based on a position forming a continous line for continous input
 CubeRenderLayer.prototype.cubePositionFunction2 = function(position, scale) {
-
-  var core_potition = new THREE.Vector3(3 * Math.cos(position), 3 * Math.sin(position), position * 3);
+  var core_potition = this.cubePositionFunction(position);
   var cube_position = new THREE.Vector3(Math.cos(position * 64), Math.sin(position * 64), 0);
   cube_position.multiply(new THREE.Vector3(scale, scale, scale));
   return core_potition.add(cube_position);
-  //return new THREE.Vector3(Math.cos(position), 0, position);
 }
 
 // Returns a point (x,y,z) at based on a position forming a continous line for continous input
 CubeRenderLayer.prototype.cubePositionFunction = function(position) {
-  return new THREE.Vector3(Math.cos(position), Math.sin(position), position);
+  return new THREE.Vector3(4 * Math.cos(position), 4 * Math.sin(position), position * 3);
   //return new THREE.Vector3(Math.cos(position), 0, position);
 }
 
@@ -139,8 +163,10 @@ CubeRenderLayer.prototype.update = function(frame) {
   this.camera.position.z = 30 * Math.cos(frame/200);;
 
 
-  this.camera.lookAt(new THREE.Vector3(0,0,0));
-*/
+  this.camera.lookAt(new THREE.Vector3(0,0,0));*/
+
+  this.point_light.position.set( this.camera.position.x, this.camera.position.y, this.camera.position.z );
+
   var scale = Math.sin(frame/100)+1
   this.ball.scale.set(scale, scale, scale);
 
