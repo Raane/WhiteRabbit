@@ -53,7 +53,7 @@ CubeRenderLayer.prototype.generate_cubes = function() {
     this.cubes.push(new THREE.Mesh(geometry, ball_material));
     this.scene.add(this.cubes[i]);
 
-    var position = i/(3*64);
+    var position = i/(3*64) - 10;
     var dnp = this.corePositionDerived(position);
     this.cubes[i].rotation.set(dnp.x, dnp.y, dnp.z);
   }
@@ -94,12 +94,13 @@ CubeRenderLayer.prototype.update = function(frame) {
   this.camera.lookAt(new THREE.Vector3(0,0,0));*/
 
   for(var i = 0; i < this.cube_count; i++) {
-    var scale = Math.max( Math.pow(Math.sin(frame/100 + i/(this.cube_count * 1.3) * Math.PI * 2) + 1, 3) - 0.5, 0);
-    scale /= 15 * 3;
+    var curve = Math.max( Math.pow(Math.sin(frame/100 + i/(this.cube_count * 1.3) * Math.PI * 2) + 1, 3) - 0.5, 0);
+    var scale = curve / 45;
     this.cubes[i].scale.set(scale, scale, scale);
 
     var position = i/(3*64) - 10;
-    var np = this.cubePositionFunction(position, scale * 3 * 3 );
+    var offset = (curve / 45) * 9;
+    var np = this.cubePositionFunction(position, offset );
     this.cubes[i].position.set(np.x, np.y, np.z);
   }
 };
