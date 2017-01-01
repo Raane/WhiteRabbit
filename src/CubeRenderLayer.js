@@ -32,10 +32,10 @@ CubeRenderLayer.prototype.generate_cubes = function() {
   var ball_material = new THREE.ShaderMaterial(SHADERS.topshader);
   this.cubes = [];
 
-  this.cube_count = 2000;
+  this.cube_count = 1000;
 
   for(var i = 0; i < this.cube_count; i++) {
-    var position = i/(3*16) - 10;
+    var position = i/(3*64) - 10;
     var np = this.cubePositionFunction2(position);
     this.cubes.push(new THREE.Mesh(geometry, ball_material));
     this.cubes[i].position.set(np.x, np.y, np.z);
@@ -88,7 +88,7 @@ CubeRenderLayer.prototype.generate_cubes = function() {
 CubeRenderLayer.prototype.cubePositionFunction2 = function(position, scale) {
 
   var core_potition = new THREE.Vector3(3 * Math.cos(position), 3 * Math.sin(position), position * 3);
-  var cube_position = new THREE.Vector3(Math.cos(position * 16), Math.sin(position * 16), 0);
+  var cube_position = new THREE.Vector3(Math.cos(position * 64), Math.sin(position * 64), 0);
   cube_position.multiply(new THREE.Vector3(scale, scale, scale));
   return core_potition.add(cube_position);
   //return new THREE.Vector3(Math.cos(position), 0, position);
@@ -134,23 +134,23 @@ CubeRenderLayer.prototype.end = function() {
 };
 
 CubeRenderLayer.prototype.update = function(frame) {
-  this.camera.position.x = 30 * Math.sin(frame/200);
+  /*this.camera.position.x = 30 * Math.sin(frame/200);
   this.camera.position.y = 0;
   this.camera.position.z = 30 * Math.cos(frame/200);;
 
 
   this.camera.lookAt(new THREE.Vector3(0,0,0));
-
+*/
   var scale = Math.sin(frame/100)+1
   this.ball.scale.set(scale, scale, scale);
 
   for(var i = 0; i < this.cube_count; i++) {
-    var scale = Math.max( Math.pow(Math.sin(frame/100 + i/(this.cube_count * 0.3) * Math.PI * 2) + 1, 3) - 2.5, 0);
-    scale /= 15;
+    var scale = Math.max( Math.pow(Math.sin(frame/100 + i/(this.cube_count * 1.3) * Math.PI * 2) + 1, 3) - 0.5, 0);
+    scale /= 15 * 3;
     this.cubes[i].scale.set(scale, scale, scale);
 
-    var position = i/(3*16) - 10;
-    var np = this.cubePositionFunction2(position, scale * 3);
+    var position = i/(3*64) - 10;
+    var np = this.cubePositionFunction2(position, scale * 3 * 3 );
     this.cubes[i].position.set(np.x, np.y, np.z);
   }
 
