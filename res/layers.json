@@ -20,10 +20,20 @@
     }
   },
   {
+    "type": "HypnoWingLayer",
+    "displayName": "HypnoWing",
+    "startFrame": 1201,
+    "endFrame": 2000,
+    "color": "#1b592f",
+    "config": {
+      "offset": 2
+    }
+  },
+  {
     "type": "TextureBallLayer",
     "displayName": "TextureBall",
-    "startFrame": 1200,
-    "endFrame": 1500,
+    "startFrame": 2001,
+    "endFrame": 2500,
     "color": "#1b592f",
     "config": {
       "offset": 2
@@ -33,7 +43,7 @@
   {
     "type": "CubeRenderLayer",
     "displayName": "CubeRender",
-    "startFrame": 1500,
+    "startFrame": 2500,
     "endFrame": 10015,
     "color": "#1b592f",
     "config": {
