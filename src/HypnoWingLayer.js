@@ -22,6 +22,14 @@ function HypnoWingLayer(layer) {
   this.top_material = new THREE.ShaderMaterial(SHADERS.topshader);
   this.wall_material = new THREE.ShaderMaterial(SHADERS.wallshader);
   
+  this.top_material = new THREE.MeshBasicMaterial( { 
+    color: 0xffffff, 
+    specular: 0x050505,
+    shininess: 100,
+    map: Loader.loadTexture('res/' + 'UV-testmap.jpg'),
+    opacity: 1.0, transparent: false
+  } );
+
   this.create_layer(0);
   this.create_layer(-20);
   this.create_layer(-40);
@@ -202,9 +210,9 @@ HypnoWingLayer.prototype.create_geoms = function(geometry, size) {
   var lv2 = new THREE.Vector3(0,-10,0);
   var lv3 = new THREE.Vector3(0,-11,0);
   var lv4 = new THREE.Vector3(size,0,0);
-  var lv5 = new THREE.Vector3(size-1,-1,0);
-  var lv6 = new THREE.Vector3(size-1,-10,0);
-  var lv7 = new THREE.Vector3(size,-11,0);
+  var lv6 = new THREE.Vector3(size-1,-1,0);
+  var lv7 = new THREE.Vector3(size-1,-10,0);
+  var lv5 = new THREE.Vector3(size,-11,0);
 
   geometry.vertices.push(lv0);
   geometry.vertices.push(lv1);
@@ -215,7 +223,7 @@ HypnoWingLayer.prototype.create_geoms = function(geometry, size) {
   geometry.vertices.push(lv6);
   geometry.vertices.push(lv7);
 
-  geometry.faces.push( new THREE.Face3( 0, 4, 1 ) );
+  geometry.faces.push( new THREE.Face3( 0, 6, 1 ) );
   geometry.faces.push( new THREE.Face3( 0, 4, 6 ) );
   geometry.faces.push( new THREE.Face3( 4, 7, 6 ) );
   geometry.faces.push( new THREE.Face3( 4, 5, 7 ) );
@@ -229,11 +237,11 @@ HypnoWingLayer.prototype.create_geoms = function(geometry, size) {
   var lt2 = new THREE.Vector2( 0, 0.75 );
   var lt3 = new THREE.Vector2( 0, 1 );
   var lt4 = new THREE.Vector2( 1, 0 );
-  var lt5 = new THREE.Vector2( 0.75, 0.25 );
-  var lt6 = new THREE.Vector2( 0.75, 0.75 );
-  var lt7 = new THREE.Vector2( 1, 1 );
+  var lt6 = new THREE.Vector2( 0.75, 0.25 );
+  var lt7 = new THREE.Vector2( 0.75, 0.75 );
+  var lt5 = new THREE.Vector2( 1, 1 );
 
-  geometry.faceVertexUvs[0][0] = [lt0, lt4, lt1];
+  geometry.faceVertexUvs[0][0] = [lt0, lt6, lt1];
   geometry.faceVertexUvs[0][1] = [lt0, lt4, lt6];
   geometry.faceVertexUvs[0][2] = [lt4, lt7, lt6];
   geometry.faceVertexUvs[0][3] = [lt4, lt5, lt7];
@@ -262,7 +270,7 @@ HypnoWingLayer.prototype.end = function() {
 };
 
 HypnoWingLayer.prototype.update = function(frame) {
-  this.top_material.uniforms.time.value = frame * 0;
+  //this.top_material.uniforms.time.value = frame * 0;
 
   //this.camera.position.y = 34 - frame/20 ;
 
@@ -270,6 +278,6 @@ HypnoWingLayer.prototype.update = function(frame) {
   this.wall_material.uniforms.colorB.value = new THREE.Color(208 / 255, 225 / 255, 255 / 255);
   this.wall_material.uniforms.time.value = frame;
 
-  this.top_material.uniforms.tiles.value = 4;
-  this.top_material.uniforms.time.value = frame;
+  //this.top_material.uniforms.tiles.value = 4;
+  //this.top_material.uniforms.time.value = frame;
 };
