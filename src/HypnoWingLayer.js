@@ -35,7 +35,7 @@ function HypnoWingLayer(layer) {
     map: Loader.loadTexture('res/' + 'UV-testmap.jpg'),
     opacity: 1.0, transparent: false
   } );
-  this.wing_material = new THREE.ShaderMaterial(SHADERS.topshader);
+  this.wing_material = new THREE.ShaderMaterial(SHADERS.wingshader);
   this.wing_material.side = THREE.DoubleSide;
   this.wing_material.uniforms.time.value = 0;
 
@@ -240,4 +240,5 @@ HypnoWingLayer.prototype.end = function() {
 
 HypnoWingLayer.prototype.update = function(frame) {
     this.wing_material.uniforms.time.value = frame;
+    this.wing_material.uniforms.tiles.value = 1;
 };
