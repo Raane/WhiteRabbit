@@ -31,12 +31,13 @@ function HypnoWingLayer(layer) {
 
   this.top_material = new THREE.MeshBasicMaterial( { 
     color: 0xffffff, 
-    specular: 0x050505,
     side: THREE.DoubleSide,
-    shininess: 100,
     map: Loader.loadTexture('res/' + 'UV-testmap.jpg'),
     opacity: 1.0, transparent: false
   } );
+  this.wing_material = new THREE.ShaderMaterial(SHADERS.topshader);
+  this.wing_material.side = THREE.DoubleSide;
+  this.wing_material.uniforms.time.value = 0;
 
   this.create_layer(0);
  
@@ -99,7 +100,7 @@ HypnoWingLayer.prototype.create_large = function(x, y, z, ry) {
   for(var i=0; i<6; i++) {
     var mesh = new THREE.Mesh();
 
-    this.create_top(mesh, this.large_square_geom[i], this.top_material);
+    this.create_top(mesh, this.large_square_geom[i], this.wing_material );
 
     mesh.position.x = x + ((x<0)?i:-i) * offset / 2;
     mesh.position.y = y;
@@ -209,8 +210,6 @@ HypnoWingLayer.prototype.create_bridge_geoms = function(geometry, size, height) 
   geometry.faces.push( new THREE.Face3( 4, 5, 7 ) );
   geometry.faces.push( new THREE.Face3( 5, 3, 7 ) );
   geometry.faces.push( new THREE.Face3( 7, 3, 2 ) );
-  //geometry.faces.push( new THREE.Face3( 1, 6, 2 ) );
-  //geometry.faces.push( new THREE.Face3( 2, 6, 7 ) );
 
   var lt0 = new THREE.Vector2( 0, 0 );
   var lt1 = new THREE.Vector2( 0, 0.25 );
@@ -227,8 +226,6 @@ HypnoWingLayer.prototype.create_bridge_geoms = function(geometry, size, height) 
   geometry.faceVertexUvs[0][3] = [lt4, lt5, lt7];
   geometry.faceVertexUvs[0][4] = [lt5, lt3, lt7];
   geometry.faceVertexUvs[0][5] = [lt7, lt3, lt2];
-  //geometry.faceVertexUvs[0][6] = [lt1, lt6, lt2];
-  //geometry.faceVertexUvs[0][7] = [lt2, lt6, lt7];
 };
 
 HypnoWingLayer.prototype.getEffectComposerPass = function() {
@@ -242,4 +239,5 @@ HypnoWingLayer.prototype.end = function() {
 };
 
 HypnoWingLayer.prototype.update = function(frame) {
+    this.wing_material.uniforms.time.value = frame;
 };
